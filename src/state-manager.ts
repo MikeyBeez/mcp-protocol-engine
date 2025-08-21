@@ -9,7 +9,9 @@ export class StateManager {
 
   constructor() {
     // Use a simple file-based storage instead of SQLite
-    this.dataDir = path.join(process.cwd(), 'data');
+    // Use __dirname to get the directory of this file, then go up to project root
+    const projectRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+    this.dataDir = path.join(projectRoot, 'data');
     if (!fs.existsSync(this.dataDir)) {
       fs.mkdirSync(this.dataDir, { recursive: true });
     }

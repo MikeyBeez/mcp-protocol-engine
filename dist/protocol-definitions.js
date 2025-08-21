@@ -61,66 +61,6 @@ export const protocolDefinitions = [
         }
     },
     {
-        id: 'session-init',
-        name: 'Session Initialization Protocol',
-        description: 'Complete startup sequence for new Claude session',
-        triggers: [
-            { type: 'phrase', pattern: 'start session' },
-            { type: 'phrase', pattern: 'initialize' },
-            { type: 'event', pattern: 'new_conversation' }
-        ],
-        steps: [
-            {
-                id: 'brain_init',
-                name: 'Initialize Brain System',
-                description: 'Load Brain system and user preferences',
-                command: 'brain:brain_init()',
-                validation: 'Brain system initialized successfully'
-            },
-            {
-                id: 'bag_of_tricks',
-                name: 'Load Bag of Tricks',
-                description: 'Load quick reference for when stuck',
-                command: 'brain:state_get("bag_of_tricks", category="system")',
-                validation: 'Bag of tricks reference loaded'
-            },
-            {
-                id: 'locations',
-                name: 'Load Critical Locations',
-                description: 'Load system paths and file locations',
-                command: 'brain:state_get("critical_locations", category="system")',
-                validation: 'All critical locations loaded'
-            },
-            {
-                id: 'project',
-                name: 'Restore Project Context',
-                description: 'Load last active project context',
-                command: 'brain:state_get("last_project", category="session")',
-                validation: 'Project context restored or new project selected'
-            },
-            {
-                id: 'captain_log',
-                name: "Check Captain's Log",
-                description: "Load today's Captain's Log if available",
-                command: 'filesystem:read_file("/Users/bard/Code/claude-brain/data/BrainVault/Captain\'s log ${today}.md")',
-                validation: "Today's context loaded",
-                conditional: 'file_exists'
-            },
-            {
-                id: 'reminders',
-                name: 'Check Reminders',
-                description: 'Review any pending reminders',
-                command: 'brain-manager:check_reminders()',
-                validation: 'Reminders reviewed'
-            }
-        ],
-        metadata: {
-            priority: 'critical',
-            category: 'system',
-            tags: ['initialization', 'startup', 'session']
-        }
-    },
-    {
         id: 'auto-continuation',
         name: 'Auto-Continuation Protocol',
         description: 'Generate continuation note after multiple continues',
