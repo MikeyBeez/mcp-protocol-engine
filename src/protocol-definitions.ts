@@ -324,5 +324,228 @@ export const protocolDefinitions: ProtocolDefinition[] = [
       category: 'productivity',
       tags: ['todo', 'tasks', 'planning']
     }
+  },
+
+  {
+    id: 'memory-storage',
+    name: 'Intelligent Memory Storage Protocol',
+    description: 'Automatically detect and store personal information and preferences',
+    triggers: [
+      { type: 'phrase', pattern: 'i like' },
+      { type: 'phrase', pattern: 'i love' },
+      { type: 'phrase', pattern: 'i enjoy' },
+      { type: 'phrase', pattern: 'i prefer' },
+      { type: 'phrase', pattern: 'i dislike' },
+      { type: 'phrase', pattern: 'i hate' },
+      { type: 'phrase', pattern: 'i have' },
+      { type: 'phrase', pattern: 'i own' },
+      { type: 'phrase', pattern: 'i work at' },
+      { type: 'phrase', pattern: 'i live in' },
+      { type: 'phrase', pattern: 'my wife' },
+      { type: 'phrase', pattern: 'my husband' },
+      { type: 'phrase', pattern: 'my family' },
+      { type: 'phrase', pattern: 'i want to' },
+      { type: 'phrase', pattern: 'i plan to' }
+    ],
+    steps: [
+      {
+        id: 'analyze',
+        name: 'Analyze Statement',
+        description: 'Determine if statement contains personal information worth storing',
+        validation: 'Statement analyzed and categorized'
+      },
+      {
+        id: 'validate',
+        name: 'Validate Content',
+        description: 'Ensure content is clear and not ambiguous',
+        command: 'bullshit-detector:detect_bullshit("${user_statement}")',
+        validation: 'Content validated for clarity'
+      },
+      {
+        id: 'extract',
+        name: 'Extract Key Information',
+        description: 'Pull out the meaningful personal data',
+        validation: 'Key information extracted'
+      },
+      {
+        id: 'store',
+        name: 'Store Memory',
+        description: 'Save the information to memory system',
+        command: 'brain:brain_remember("${memory_key}", "${memory_content}", type="personal")',
+        validation: 'Memory stored successfully'
+      },
+      {
+        id: 'confirm',
+        name: 'Confirm Storage',
+        description: 'Let user know what was remembered',
+        validation: 'User notified of stored information'
+      }
+    ],
+    metadata: {
+      priority: 'high',
+      category: 'memory',
+      tags: ['personal', 'preferences', 'storage', 'automatic']
+    }
+  },
+
+  {
+    id: 'memory-recall',
+    name: 'Intelligent Memory Recall Protocol',
+    description: 'Automatically recall relevant memories when user asks questions',
+    triggers: [
+      { type: 'phrase', pattern: 'what do you remember' },
+      { type: 'phrase', pattern: 'tell me about my' },
+      { type: 'phrase', pattern: 'do you remember' },
+      { type: 'phrase', pattern: 'what do i like' },
+      { type: 'phrase', pattern: 'what car do i have' },
+      { type: 'phrase', pattern: 'where do i work' },
+      { type: 'phrase', pattern: 'where do i live' },
+      { type: 'phrase', pattern: 'who is my' },
+      { type: 'state', pattern: 'recommendation_request' },
+      { type: 'state', pattern: 'preference_dependent' }
+    ],
+    steps: [
+      {
+        id: 'analyze_query',
+        name: 'Analyze Query',
+        description: 'Understand what type of information is being requested',
+        validation: 'Query type identified'
+      },
+      {
+        id: 'generate_search',
+        name: 'Generate Search Terms',
+        description: 'Create appropriate search terms for memory recall',
+        validation: 'Search terms generated'
+      },
+      {
+        id: 'search_memories',
+        name: 'Search Memories',
+        description: 'Look for relevant stored information',
+        command: 'brain:brain_recall("${search_terms}", limit=10)',
+        validation: 'Memories searched'
+      },
+      {
+        id: 'filter_relevant',
+        name: 'Filter Relevant Results',
+        description: 'Select most relevant memories for the query',
+        validation: 'Relevant memories identified'
+      },
+      {
+        id: 'synthesize_response',
+        name: 'Synthesize Response',
+        description: 'Combine relevant memories into coherent answer',
+        validation: 'Response synthesized from stored memories'
+      }
+    ],
+    metadata: {
+      priority: 'high',
+      category: 'memory',
+      tags: ['recall', 'search', 'personal', 'automatic']
+    }
+  },
+
+  {
+    id: 'memory-clarification',
+    name: 'Memory Clarification Protocol',
+    description: 'Handle unclear memory requests and provide guidance',
+    triggers: [
+      { type: 'phrase', pattern: 'remember that' },
+      { type: 'phrase', pattern: 'remember it' },
+      { type: 'phrase', pattern: 'remember this' },
+      { type: 'phrase', pattern: 'save that' },
+      { type: 'phrase', pattern: 'store it' },
+      { type: 'error', pattern: 'unclear_content' },
+      { type: 'error', pattern: 'ambiguous_reference' }
+    ],
+    steps: [
+      {
+        id: 'detect_ambiguity',
+        name: 'Detect Ambiguous Content',
+        description: 'Identify what makes the request unclear',
+        validation: 'Ambiguity type identified'
+      },
+      {
+        id: 'explain_issue',
+        name: 'Explain the Issue',
+        description: 'Tell user why the request cannot be processed',
+        validation: 'Issue explained to user'
+      },
+      {
+        id: 'provide_examples',
+        name: 'Provide Examples',
+        description: 'Show user how to format memory requests properly',
+        validation: 'Examples provided'
+      },
+      {
+        id: 'suggest_alternatives',
+        name: 'Suggest Alternatives',
+        description: 'Offer better ways to phrase the request',
+        validation: 'Alternative phrasings suggested'
+      },
+      {
+        id: 'educational_note',
+        name: 'Add Educational Note',
+        description: 'Explain why clear memory content is important',
+        validation: 'Educational context provided'
+      }
+    ],
+    metadata: {
+      priority: 'medium',
+      category: 'memory',
+      tags: ['clarification', 'guidance', 'education']
+    }
+  },
+
+  {
+    id: 'context-memory',
+    name: 'Context-Aware Memory Protocol',
+    description: 'Use stored memories to enhance responses and recommendations',
+    triggers: [
+      { type: 'state', pattern: 'recommendation_needed' },
+      { type: 'state', pattern: 'personalization_opportunity' },
+      { type: 'phrase', pattern: 'recommend' },
+      { type: 'phrase', pattern: 'suggest' },
+      { type: 'phrase', pattern: 'what should i' },
+      { type: 'phrase', pattern: 'good for me' },
+      { type: 'phrase', pattern: 'suitable for' }
+    ],
+    steps: [
+      {
+        id: 'assess_context',
+        name: 'Assess Context',
+        description: 'Determine if stored memories could enhance response',
+        validation: 'Context assessed for memory relevance'
+      },
+      {
+        id: 'search_relevant',
+        name: 'Search Relevant Memories',
+        description: 'Look for memories that relate to current request',
+        command: 'brain:brain_recall("${context_keywords}", limit=5)',
+        validation: 'Relevant memories retrieved'
+      },
+      {
+        id: 'evaluate_relevance',
+        name: 'Evaluate Relevance',
+        description: 'Determine which memories are actually useful',
+        validation: 'Memory relevance evaluated'
+      },
+      {
+        id: 'integrate_memories',
+        name: 'Integrate Memories',
+        description: 'Incorporate relevant memories into response',
+        validation: 'Memories integrated into response'
+      },
+      {
+        id: 'personalize_response',
+        name: 'Personalize Response',
+        description: 'Tailor response based on stored preferences',
+        validation: 'Response personalized using stored information'
+      }
+    ],
+    metadata: {
+      priority: 'medium',
+      category: 'memory',
+      tags: ['context', 'personalization', 'enhancement']
+    }
   }
 ];
